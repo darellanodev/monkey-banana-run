@@ -20,6 +20,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        viewport = new FitViewport(8,5);
         image = new Texture("libgdx.png");
         monkey = new Texture("monkey.png");
         background = new Texture("background.png");
