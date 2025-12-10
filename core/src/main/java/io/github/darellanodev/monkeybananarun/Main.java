@@ -15,11 +15,13 @@ public class Main extends ApplicationAdapter {
     private Texture image;
     private Texture background;
     private Music music;
+    private Texture monkey;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
+        monkey = new Texture("monkey.png");
         background = new Texture("background.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
     }
@@ -30,7 +32,8 @@ public class Main extends ApplicationAdapter {
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        batch.draw(image, 140, 210);
+        batch.draw(background, 0, 0, 1, 1);
+        batch.draw(monkey, 140, 210, 1, 1);
         batch.end();
     }
 
