@@ -20,7 +20,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        viewport = new FitViewport(8,5);
+        viewport = new FitViewport(1344, 768);
         image = new Texture("libgdx.png");
         monkey = new Texture("monkey.png");
         background = new Texture("background.png");
@@ -33,8 +33,8 @@ public class Main extends ApplicationAdapter {
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        batch.draw(background, 0, 0, 1, 1);
-        batch.draw(monkey, 140, 210, 1, 1);
+        batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        batch.draw(monkey, 100, 170, 128, 128);
         batch.end();
     }
 
