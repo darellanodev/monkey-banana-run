@@ -2,6 +2,7 @@ package io.github.darellanodev.monkeybananarun;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -38,6 +39,16 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
+        input();
+        logic();
+        draw();
+    }
+
+    private void logic() {
+
+    }
+
+    private void draw() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
@@ -46,6 +57,15 @@ public class Main extends ApplicationAdapter {
         batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         monkeySprite.draw(batch);
         batch.end();
+    }
+
+    private void input() {
+        float speed = 4f;
+        float delta = Gdx.graphics.getDeltaTime();
+
+        if (Gdx.input.isKeyPressed((Input.Keys.RIGHT))) {
+            monkeySprite.translateX(speed * delta);
+        }
     }
 
     @Override
