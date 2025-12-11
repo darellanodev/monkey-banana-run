@@ -16,11 +16,14 @@ public class Main extends ApplicationAdapter {
     private Texture background;
     private Music music;
     private Texture monkey;
+    public static final float WORLD_WIDTH = 16f;
+    public static final float WORLD_HEIGHT = 9f;
+
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        viewport = new FitViewport(1344, 768);
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         image = new Texture("libgdx.png");
         monkey = new Texture("monkey.png");
         background = new Texture("background.png");
@@ -34,7 +37,7 @@ public class Main extends ApplicationAdapter {
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
         batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-        batch.draw(monkey, 100, 170, 128, 128);
+        batch.draw(monkey, 2f, 2f, 2f, 2f);
         batch.end();
     }
 
