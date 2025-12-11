@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -17,11 +18,13 @@ public class Main extends ApplicationAdapter {
     private FitViewport viewport;
     private Texture image;
     private Texture background;
+    private Texture bananaTexture;
     private Music music;
     private Texture monkeyTexture;
     private Sprite monkeySprite;
     public static final float WORLD_WIDTH = 16f;
     public static final float WORLD_HEIGHT = 9f;
+    private Array<Sprite> bananaSprites;
 
 
     @Override
@@ -30,12 +33,17 @@ public class Main extends ApplicationAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         image = new Texture("libgdx.png");
         monkeyTexture = new Texture("monkey.png");
+        bananaTexture = new Texture("banana.png");
         background = new Texture("background.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 
         monkeySprite = new Sprite(monkeyTexture);
         monkeySprite.setSize(2,2);
         monkeySprite.setPosition(1f,2f);
+
+        bananaSprites = new Array<>();
+
+        createBanana();
     }
 
     @Override
@@ -55,9 +63,22 @@ public class Main extends ApplicationAdapter {
         batch.setProjectionMatrix(viewport.getCamera().combined);
 
         batch.begin();
+
         batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         monkeySprite.draw(batch);
+        for (Sprite bananaSprite: bananaSprites) {
+            bananaSprite.draw(batch);
+        }
+
         batch.end();
+    }
+
+    private void createBanana() {
+        Sprite bananaSprite = new Sprite(bananaTexture);
+        bananaSprite.setSize(1f,1f);
+        bananaSprite.setX(4f);
+        bananaSprite.setY(5f);
+        bananaSprites.add(bananaSprite);
     }
 
     private void input() {
