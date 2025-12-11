@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -15,7 +16,8 @@ public class Main extends ApplicationAdapter {
     private Texture image;
     private Texture background;
     private Music music;
-    private Texture monkey;
+    private Texture monkeyTexture;
+    private Sprite monkeySprite;
     public static final float WORLD_WIDTH = 16f;
     public static final float WORLD_HEIGHT = 9f;
 
@@ -25,9 +27,13 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         image = new Texture("libgdx.png");
-        monkey = new Texture("monkey.png");
+        monkeyTexture = new Texture("monkey.png");
         background = new Texture("background.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+
+        monkeySprite = new Sprite(monkeyTexture);
+        monkeySprite.setSize(2,2);
+        monkeySprite.setPosition(1f,2f);
     }
 
     @Override
@@ -35,9 +41,10 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
+
         batch.begin();
         batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-        batch.draw(monkey, 2f, 2f, 2f, 2f);
+        monkeySprite.draw(batch);
         batch.end();
     }
 
