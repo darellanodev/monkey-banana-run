@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -45,7 +46,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void logic() {
-
+        monkeySprite.setX(MathUtils.clamp(monkeySprite.getX(), 0, viewport.getWorldWidth() - monkeySprite.getWidth()));
     }
 
     private void draw() {
