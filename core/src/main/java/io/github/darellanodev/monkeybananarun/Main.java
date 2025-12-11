@@ -63,9 +63,12 @@ public class Main extends ApplicationAdapter {
         float speed = 4f;
         float delta = Gdx.graphics.getDeltaTime();
 
-        if (Gdx.input.isKeyPressed((Input.Keys.RIGHT))) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             monkeySprite.translateX(speed * delta);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            monkeySprite.translateX(-speed * delta);
         }
+
     }
 
     @Override
