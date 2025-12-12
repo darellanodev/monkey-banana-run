@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -21,6 +22,8 @@ public class Main extends ApplicationAdapter {
     private Music music;
     private Texture monkeyTexture;
     private Sprite monkeySprite;
+    private Rectangle monkeyRectangle;
+    private Rectangle bananaRectangle;
     public static final float WORLD_WIDTH = 16f;
     public static final float WORLD_HEIGHT = 9f;
     private Array<Sprite> bananaSprites;
@@ -41,6 +44,9 @@ public class Main extends ApplicationAdapter {
 
         bananaSprites = new Array<>();
 
+        monkeyRectangle = new Rectangle();
+        bananaRectangle = new Rectangle();
+
         createBananas();
     }
 
@@ -53,6 +59,17 @@ public class Main extends ApplicationAdapter {
 
     private void logic() {
         monkeySprite.setX(MathUtils.clamp(monkeySprite.getX(), 0, viewport.getWorldWidth() - monkeySprite.getWidth()));
+
+        monkeyRectangle.set(monkeySprite.getX(), monkeySprite.getY(), monkeySprite.getWidth(), monkeySprite.getHeight());
+        for (int i = bananaSprites.size - 1; i >= 0; i--) {
+
+            Sprite bananaSprite = bananaSprites.get(i);
+            bananaRectangle.set(bananaSprite.getX(), bananaSprite.getY(), bananaSprite.getWidth(), bananaSprite.getHeight());
+
+            if (bananaRectangle.overlaps(monkeyRectangle)) {
+                bananaSprites.removeIndex(i);
+            }
+        }
     }
 
     private void draw() {
