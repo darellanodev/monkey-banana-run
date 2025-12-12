@@ -36,7 +36,8 @@ public class Main extends ApplicationAdapter {
         monkeyTexture = new Texture("monkey.png");
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
-        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+
+        createMusic();
 
         monkeySprite = new Sprite(monkeyTexture);
         monkeySprite.setSize(2,2);
@@ -48,6 +49,13 @@ public class Main extends ApplicationAdapter {
         bananaRectangle = new Rectangle();
 
         createBananas();
+    }
+
+    private void createMusic() {
+        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        music.setLooping(true);
+        music.setVolume(.5f);
+        music.play();
     }
 
     @Override
