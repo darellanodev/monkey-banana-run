@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private FitViewport viewport;
-    private Texture background;
+    private Texture backgroundTexture;
     private Texture bananaTexture;
     private Music music;
     private Texture monkeyTexture;
@@ -32,7 +32,7 @@ public class Main extends ApplicationAdapter {
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         monkeyTexture = new Texture("monkey.png");
         bananaTexture = new Texture("banana.png");
-        background = new Texture("background.png");
+        backgroundTexture = new Texture("background.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 
         monkeySprite = new Sprite(monkeyTexture);
@@ -62,7 +62,7 @@ public class Main extends ApplicationAdapter {
 
         batch.begin();
 
-        batch.draw(background, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         monkeySprite.draw(batch);
         for (Sprite bananaSprite: bananaSprites) {
             bananaSprite.draw(batch);
