@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private FitViewport viewport;
-    private Texture image;
     private Texture background;
     private Texture bananaTexture;
     private Music music;
@@ -31,7 +30,6 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        image = new Texture("libgdx.png");
         monkeyTexture = new Texture("monkey.png");
         bananaTexture = new Texture("banana.png");
         background = new Texture("background.png");
@@ -96,7 +94,6 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-        image.dispose();
     }
 
     @Override
