@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,6 +21,7 @@ public class Main extends ApplicationAdapter {
     private Texture backgroundTexture;
     private Texture bananaTexture;
     private Music music;
+    private Sound pickUpBananaSound;
     private Texture monkeyTexture;
     private Sprite monkeySprite;
     private Rectangle monkeyRectangle;
@@ -37,6 +39,7 @@ public class Main extends ApplicationAdapter {
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
 
+        pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
         createMusic();
 
         monkeySprite = new Sprite(monkeyTexture);
@@ -76,6 +79,7 @@ public class Main extends ApplicationAdapter {
 
             if (bananaRectangle.overlaps(monkeyRectangle)) {
                 bananaSprites.removeIndex(i);
+                pickUpBananaSound.play();
             }
         }
     }
