@@ -41,7 +41,7 @@ public class Main extends ApplicationAdapter {
 
         bananaSprites = new Array<>();
 
-        createBanana();
+        createBananas();
     }
 
     @Override
@@ -71,11 +71,17 @@ public class Main extends ApplicationAdapter {
         batch.end();
     }
 
-    private void createBanana() {
+    private void createBananas() {
+        addBanana(7f, 3f);
+        addBanana(9f, 3f);
+        addBanana(11f, 5f);
+    }
+
+    private void addBanana(float x, float y) {
         Sprite bananaSprite = new Sprite(bananaTexture);
         bananaSprite.setSize(1f,1f);
-        bananaSprite.setX(4f);
-        bananaSprite.setY(5f);
+        bananaSprite.setX(x);
+        bananaSprite.setY(y);
         bananaSprites.add(bananaSprite);
     }
 
