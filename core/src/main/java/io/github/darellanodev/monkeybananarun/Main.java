@@ -2,13 +2,11 @@ package io.github.darellanodev.monkeybananarun;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -22,14 +20,14 @@ public class Main extends ApplicationAdapter {
     private Texture bananaTexture;
     private Music music;
     private Sound pickUpBananaSound;
+
     private Texture monkeyTexture;
-    private Sprite monkeySprite;
-    private Rectangle monkeyRectangle;
+    private Monkey monkey;
+
     private Rectangle bananaRectangle;
     public static final float WORLD_WIDTH = 16f;
     public static final float WORLD_HEIGHT = 9f;
     private Array<Sprite> bananaSprites;
-
 
     @Override
     public void create() {
@@ -42,13 +40,9 @@ public class Main extends ApplicationAdapter {
         pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
         createMusic();
 
-        monkeySprite = new Sprite(monkeyTexture);
-        monkeySprite.setSize(2,2);
-        monkeySprite.setPosition(1f,2f);
+        monkey = new Monkey(monkeyTexture);
 
         bananaSprites = new Array<>();
-
-        monkeyRectangle = new Rectangle();
         bananaRectangle = new Rectangle();
 
         createBananas();
@@ -63,21 +57,19 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        input();
+        float delta = Gdx.graphics.getDeltaTime();
+        monkey.update(delta);
+
         logic();
         draw();
     }
 
     private void logic() {
-        monkeySprite.setX(MathUtils.clamp(monkeySprite.getX(), 0, viewport.getWorldWidth() - monkeySprite.getWidth()));
-
-        monkeyRectangle.set(monkeySprite.getX(), monkeySprite.getY(), monkeySprite.getWidth(), monkeySprite.getHeight());
         for (int i = bananaSprites.size - 1; i >= 0; i--) {
-
             Sprite bananaSprite = bananaSprites.get(i);
             bananaRectangle.set(bananaSprite.getX(), bananaSprite.getY(), bananaSprite.getWidth(), bananaSprite.getHeight());
 
-            if (bananaRectangle.overlaps(monkeyRectangle)) {
+            if (bananaRectangle.overlaps(monkey.getBounds())) {
                 bananaSprites.removeIndex(i);
                 pickUpBananaSound.play();
             }
@@ -92,7 +84,7 @@ public class Main extends ApplicationAdapter {
         batch.begin();
 
         batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-        monkeySprite.draw(batch);
+        monkey.draw(batch);
         for (Sprite bananaSprite: bananaSprites) {
             bananaSprite.draw(batch);
         }
@@ -112,18 +104,6 @@ public class Main extends ApplicationAdapter {
         bananaSprite.setX(x);
         bananaSprite.setY(y);
         bananaSprites.add(bananaSprite);
-    }
-
-    private void input() {
-        float speed = 4f;
-        float delta = Gdx.graphics.getDeltaTime();
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            monkeySprite.translateX(speed * delta);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            monkeySprite.translateX(-speed * delta);
-        }
-
     }
 
     @Override
