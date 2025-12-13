@@ -9,9 +9,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class Monkey {
-    private Sprite sprite;
-    private Rectangle bounds;
-    private float speed = 4f;
+    private final Sprite sprite;
+    private final Rectangle bounds;
 
     public Monkey(Texture texture) {
         sprite = new Sprite(texture);
@@ -21,6 +20,7 @@ public class Monkey {
     }
 
     public void update(float deltaTime) {
+        float speed = 4f;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             sprite.translateX(speed * deltaTime);
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {

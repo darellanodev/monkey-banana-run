@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Banana {
-    private Sprite sprite;
-    private Rectangle bounds;
+    private final Sprite sprite;
+    private final Rectangle bounds;
 
     public Banana(Texture texture, float x, float y) {
         sprite = new Sprite(texture);
