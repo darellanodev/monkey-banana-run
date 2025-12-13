@@ -17,10 +17,8 @@ public class Main extends ApplicationAdapter {
     private FitViewport viewport;
     private Texture backgroundTexture;
     private Texture bananaTexture;
-    private Music music;
     private Sound pickUpBananaSound;
 
-    private Texture monkeyTexture;
     private Monkey monkey;
 
     private Rectangle bananaRectangle;
@@ -32,7 +30,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        monkeyTexture = new Texture("monkey.png");
+        Texture monkeyTexture = new Texture("monkey.png");
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
 
@@ -48,7 +46,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void createMusic() {
-        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        Music music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         music.setLooping(true);
         music.setVolume(.5f);
         music.play();
