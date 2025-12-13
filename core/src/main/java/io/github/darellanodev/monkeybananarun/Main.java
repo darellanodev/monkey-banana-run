@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -27,7 +26,7 @@ public class Main extends ApplicationAdapter {
     private Rectangle bananaRectangle;
     public static final float WORLD_WIDTH = 16f;
     public static final float WORLD_HEIGHT = 9f;
-    private Array<Sprite> bananaSprites;
+    private Array<Banana> bananaSprites;
 
     @Override
     public void create() {
@@ -66,8 +65,8 @@ public class Main extends ApplicationAdapter {
 
     private void logic() {
         for (int i = bananaSprites.size - 1; i >= 0; i--) {
-            Sprite bananaSprite = bananaSprites.get(i);
-            bananaRectangle.set(bananaSprite.getX(), bananaSprite.getY(), bananaSprite.getWidth(), bananaSprite.getHeight());
+            Banana banana = bananaSprites.get(i);
+            bananaRectangle.set(banana.getBounds());
 
             if (bananaRectangle.overlaps(monkey.getBounds())) {
                 bananaSprites.removeIndex(i);
@@ -85,8 +84,8 @@ public class Main extends ApplicationAdapter {
 
         batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         monkey.draw(batch);
-        for (Sprite bananaSprite: bananaSprites) {
-            bananaSprite.draw(batch);
+        for (Banana banana: bananaSprites) {
+            banana.draw(batch);
         }
 
         batch.end();
@@ -99,11 +98,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void addBanana(float x, float y) {
-        Sprite bananaSprite = new Sprite(bananaTexture);
-        bananaSprite.setSize(1f,1f);
-        bananaSprite.setX(x);
-        bananaSprite.setY(y);
-        bananaSprites.add(bananaSprite);
+        bananaSprites.add(new Banana(bananaTexture, x, y));
     }
 
     @Override
