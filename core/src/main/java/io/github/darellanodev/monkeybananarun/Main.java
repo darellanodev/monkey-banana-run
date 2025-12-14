@@ -30,7 +30,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        Texture monkeyTexture = new Texture("monkey.png");
+        Texture monkeyTexture = new Texture("monkey_run.png");
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
 
@@ -49,7 +49,7 @@ public class Main extends ApplicationAdapter {
         Music music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         music.setLooping(true);
         music.setVolume(.5f);
-        music.play();
+        //music.play();
     }
 
     @Override
