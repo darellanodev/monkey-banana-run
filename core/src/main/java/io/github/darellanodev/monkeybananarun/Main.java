@@ -17,6 +17,8 @@ public class Main extends ApplicationAdapter {
     private FitViewport viewport;
     private Texture backgroundTexture;
     private Texture bananaTexture;
+    private Texture monkeyRunTexture;
+    private Texture monkeyIdleTexture;
     private Sound pickUpBananaSound;
 
     private Monkey monkey;
@@ -30,8 +32,8 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        Texture monkeyRunTexture = new Texture("monkey_run.png");
-        Texture monkeyIdleTexture = new Texture("monkey_idle.png");
+        monkeyRunTexture = new Texture("monkey_run.png");
+        monkeyIdleTexture = new Texture("monkey_idle.png");
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
 
@@ -103,6 +105,11 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        monkeyRunTexture.dispose();
+        monkeyIdleTexture.dispose();
+        bananaTexture.dispose();
+        backgroundTexture.dispose();
+        pickUpBananaSound.dispose();
     }
 
     @Override
