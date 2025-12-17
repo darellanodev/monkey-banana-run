@@ -61,7 +61,6 @@ public class Monkey {
 
 
     public void update(float deltaTime) {
-        float speed = 4f;
         moving = false;
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
