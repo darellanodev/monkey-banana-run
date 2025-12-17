@@ -12,7 +12,7 @@ import com.badlogic.gdx.Input;
 public class Monkey {
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> idleAnimation;
-    private float stateTime;
+    private float stateTime = 0f;
 
     private float x;
     private float y;
@@ -28,16 +28,15 @@ public class Monkey {
     private final float WORLD_WIDTH = 16f;
 
     public Monkey(Texture runTexture, Texture idleTexture) {
-
         runAnimation = getAnimation(runTexture);
         idleAnimation = getAnimation(idleTexture);
+        bounds = createBounds();
+    }
 
-        stateTime = 0f;
+    private Rectangle createBounds() {
         x = 1f;
         y = 2f;
-        bounds = new Rectangle(x, y, width, height);
-
-
+        return new Rectangle(x, y, width, height);
     }
 
     private Animation<TextureRegion> getAnimation(Texture texture) {
