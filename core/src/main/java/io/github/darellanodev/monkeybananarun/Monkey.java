@@ -2,7 +2,6 @@ package io.github.darellanodev.monkeybananarun;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -12,10 +11,13 @@ import com.badlogic.gdx.Input;
 
 public class Monkey {
     private final Animation<TextureRegion> runAnimation;
+    private final Animation<TextureRegion> idleAnimation;
     private float stateTime;
 
     private float x;
     private float y;
+
+    private boolean moving;
 
     private final float width = 2f;
     private final float height = 2f;
@@ -25,13 +27,25 @@ public class Monkey {
     private final float speed = 4f;
     private final float WORLD_WIDTH = 16f;
 
-    public Monkey(Texture texture) {
+    public Monkey(Texture runTexture, Texture idleTexture) {
+
+        runAnimation = getAnimation(runTexture);
+        idleAnimation = getAnimation(idleTexture);
+
+        stateTime = 0f;
+        x = 1f;
+        y = 2f;
+        bounds = new Rectangle(x, y, width, height);
+
+
+    }
+
+    private Animation<TextureRegion> getAnimation(Texture texture) {
 
         int FRAME_COLS = 6;
         int FRAME_ROWS = 1;
         int FRAME_WIDTH = 128;
         int FRAME_HEIGHT = 128;
-
         TextureRegion[][] tmp = TextureRegion.split(texture, FRAME_WIDTH, FRAME_HEIGHT);
         TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 
@@ -42,19 +56,13 @@ public class Monkey {
             }
         }
 
-        runAnimation = new Animation<>(0.1f, frames);
-
-        stateTime = 0f;
-        x = 1f;
-        y = 2f;
-        bounds = new Rectangle(x, y, width, height);
-
-
+        return new Animation<>(0.1f, frames);
     }
+
 
     public void update(float deltaTime) {
         float speed = 4f;
-        boolean moving = false;
+        moving = false;
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             x += speed * deltaTime;
@@ -66,15 +74,18 @@ public class Monkey {
 
         x = MathUtils.clamp(x, 0, WORLD_WIDTH - width);
 
-        if (moving) {
-            stateTime += deltaTime;
-        }
+        stateTime += deltaTime;
 
         bounds.set(x, y, width, height);
     }
 
     public void draw(SpriteBatch batch) {
-        TextureRegion currentFrame = runAnimation.getKeyFrame(stateTime, true);
+        TextureRegion currentFrame;
+        if (moving){
+            currentFrame = runAnimation.getKeyFrame(stateTime, true);
+        } else {
+            currentFrame = idleAnimation.getKeyFrame(stateTime, true);
+        }
         batch.draw(currentFrame, x, y, width, height);
     }
 

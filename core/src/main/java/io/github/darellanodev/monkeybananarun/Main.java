@@ -30,14 +30,15 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        Texture monkeyTexture = new Texture("monkey_run.png");
+        Texture monkeyRunTexture = new Texture("monkey_run.png");
+        Texture monkeyIdleTexture = new Texture("monkey_idle.png");
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
 
         pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
         createMusic();
 
-        monkey = new Monkey(monkeyTexture);
+        monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture);
 
         bananaSprites = new Array<>();
         bananaRectangle = new Rectangle();
