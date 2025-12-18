@@ -58,22 +58,22 @@ public class Monkey {
         return new Animation<>(0.1f, frames);
     }
 
-
     public void update(float deltaTime) {
-        moving = false;
-
+        int direction = 0;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            x += speed * deltaTime;
-            moving = true;
+            direction = 1;
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            x -= speed * deltaTime;
-            moving = true;
+            direction = -1;
         }
 
+        applyMovement(deltaTime, direction);
+    }
+
+    public void applyMovement(float deltaTime, int direction) {
+        moving = direction != 0;
+        x += direction * speed * deltaTime;
         x = MathUtils.clamp(x, 0, WORLD_WIDTH - width);
-
         stateTime += deltaTime;
-
         bounds.set(x, y, width, height);
     }
 
