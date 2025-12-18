@@ -14,6 +14,8 @@ public class Monkey {
     private final Animation<TextureRegion> idleAnimation;
     private float stateTime = 0f;
 
+    private boolean facingRight = true;
+
     private float x;
     private float y;
 
@@ -49,6 +51,10 @@ public class Monkey {
         return x;
     }
 
+    public boolean isFacingRight() {
+        return facingRight;
+    }
+
     private Animation<TextureRegion> getAnimation(Texture texture) {
 
         int FRAME_COLS = 6;
@@ -81,20 +87,31 @@ public class Monkey {
 
     public void applyMovement(float deltaTime, int direction) {
         moving = direction != 0;
+        if (direction != 0) {
+            facingRight = direction > 0;
+        }
         x += direction * speed * deltaTime;
         x = MathUtils.clamp(x, 0, WORLD_WIDTH - width);
         stateTime += deltaTime;
         bounds.set(x, y, width, height);
     }
 
+    public TextureRegion getCurrentFrame() {
+        if (moving){
+            return runAnimation.getKeyFrame(stateTime, true);
+        } else {
+            return idleAnimation.getKeyFrame(stateTime, true);
+        }
+    }
+
     public void draw(SpriteBatch batch) {
         TextureRegion currentFrame;
-        if (moving){
-            currentFrame = runAnimation.getKeyFrame(stateTime, true);
+        currentFrame = getCurrentFrame();
+        if (isFacingRight()) {
+            batch.draw(currentFrame, x, y, width, height);
         } else {
-            currentFrame = idleAnimation.getKeyFrame(stateTime, true);
+            batch.draw(currentFrame, x + width, y, -width, height);
         }
-        batch.draw(currentFrame, x, y, width, height);
     }
 
     public Rectangle getBounds() {

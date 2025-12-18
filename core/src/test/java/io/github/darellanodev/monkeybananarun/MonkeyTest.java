@@ -19,4 +19,11 @@ public class MonkeyTest {
         monkey.applyMovement(1f, 0);
         assertEquals(monkey.getX(), initialX);
     }
+
+    @Test
+    void movingLeftFacesLeft() {
+        Monkey monkey = new Monkey();
+        monkey.applyMovement(1f, -1);
+        assertFalse(monkey.isFacingRight());
+    }
 }
