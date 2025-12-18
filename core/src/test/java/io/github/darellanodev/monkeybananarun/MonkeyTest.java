@@ -11,4 +11,12 @@ public class MonkeyTest {
         monkey.applyMovement(1f, 1);
         assertTrue(monkey.getX() > initialX);
     }
+
+    @Test
+    void noMovementKeepX() {
+        Monkey monkey = new Monkey();
+        float initialX = monkey.getX();
+        monkey.applyMovement(1f, 0);
+        assertEquals(monkey.getX(), initialX);
+    }
 }
