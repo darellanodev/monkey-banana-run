@@ -27,6 +27,12 @@ public class Monkey {
     private final float speed = 4f;
     private final float WORLD_WIDTH = 16f;
 
+    public Monkey() {
+        runAnimation = null;
+        idleAnimation = null;
+        bounds = createBounds();
+    }
+
     public Monkey(Texture runTexture, Texture idleTexture) {
         runAnimation = getAnimation(runTexture);
         idleAnimation = getAnimation(idleTexture);
@@ -37,6 +43,10 @@ public class Monkey {
         x = 1f;
         y = 2f;
         return new Rectangle(x, y, width, height);
+    }
+
+    public float getX() {
+        return x;
     }
 
     private Animation<TextureRegion> getAnimation(Texture texture) {
