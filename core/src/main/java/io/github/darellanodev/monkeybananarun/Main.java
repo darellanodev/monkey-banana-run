@@ -73,20 +73,31 @@ public class Main extends ApplicationAdapter {
     }
 
     private void logic() {
+        menuLogic();
+        bananasLogic();
+    }
+
+    private void menuLogic() {
+        if (shouldDisplayMenu && menu.isStartGame()) {
+            shouldDisplayMenu = false;
+        }
+    }
+
+    private void bananasLogic() {
         if (shouldDisplayMenu) {
-            if (menu.isStartGame()) {
-                shouldDisplayMenu = false;
-            }
             return;
         }
         for (int i = bananaSprites.size - 1; i >= 0; i--) {
-            Banana banana = bananaSprites.get(i);
-            bananaRectangle.set(banana.getBounds());
+            checkIfMonkeyCollidesWithBanana(i);
+        }
+    }
 
-            if (bananaRectangle.overlaps(monkey.getBounds())) {
-                bananaSprites.removeIndex(i);
-                pickUpBananaSound.play();
-            }
+    private void checkIfMonkeyCollidesWithBanana(int i) {
+        Banana banana = bananaSprites.get(i);
+        bananaRectangle.set(banana.getBounds());
+        if (bananaRectangle.overlaps(monkey.getBounds())) {
+            bananaSprites.removeIndex(i);
+            pickUpBananaSound.play();
         }
     }
 
