@@ -15,22 +15,23 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private FitViewport viewport;
-    private Texture backgroundTexture;
-    private Texture bananaTexture;
-    private Texture monkeyRunTexture;
-    private Texture monkeyIdleTexture;
-    private Texture menuTexture;
-    private Sound pickUpBananaSound;
-
-    private Menu menu;
-    private Monkey monkey;
-
-    private boolean shouldDisplayMenu;
-
-    private Rectangle bananaRectangle;
     public static final float WORLD_WIDTH = 16f;
     public static final float WORLD_HEIGHT = 9f;
+
+    private Texture backgroundTexture;
+
+    private Texture bananaTexture;
+    private Sound pickUpBananaSound;
+    private Rectangle bananaRectangle;
     private Array<Banana> bananaSprites;
+
+    private Monkey monkey;
+    private Texture monkeyRunTexture;
+    private Texture monkeyIdleTexture;
+
+    private Menu menu;
+    private Texture menuTexture;
+    private boolean shouldDisplayMenu;
 
     @Override
     public void create() {
