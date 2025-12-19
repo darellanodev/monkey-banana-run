@@ -36,11 +36,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        monkeyRunTexture = new Texture("monkey_run.png");
-        monkeyIdleTexture = new Texture("monkey_idle.png");
-        bananaTexture = new Texture("banana.png");
-        backgroundTexture = new Texture("background.png");
-        menuTexture = new Texture("menu.png");
+        createTextures();
         shouldDisplayMenu = true;
 
         pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
@@ -53,6 +49,14 @@ public class Main extends ApplicationAdapter {
         bananaRectangle = new Rectangle();
 
         createBananas();
+    }
+
+    private void createTextures() {
+        monkeyRunTexture = new Texture("monkey_run.png");
+        monkeyIdleTexture = new Texture("monkey_idle.png");
+        bananaTexture = new Texture("banana.png");
+        backgroundTexture = new Texture("background.png");
+        menuTexture = new Texture("menu.png");
     }
 
     private void createMusic() {
