@@ -123,11 +123,19 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        disposeTextures();
+        disposeSounds();
+    }
+
+    private void disposeTextures() {
         monkeyRunTexture.dispose();
         monkeyIdleTexture.dispose();
         bananaTexture.dispose();
         backgroundTexture.dispose();
         menuTexture.dispose();
+    }
+
+    private void disposeSounds() {
         pickUpBananaSound.dispose();
     }
 
