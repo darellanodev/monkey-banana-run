@@ -19,9 +19,13 @@ public class Main extends ApplicationAdapter {
     private Texture bananaTexture;
     private Texture monkeyRunTexture;
     private Texture monkeyIdleTexture;
+    private Texture menuTexture;
     private Sound pickUpBananaSound;
 
+    private Menu menu;
     private Monkey monkey;
+
+    private boolean shouldDisplayMenu;
 
     private Rectangle bananaRectangle;
     public static final float WORLD_WIDTH = 16f;
@@ -36,10 +40,13 @@ public class Main extends ApplicationAdapter {
         monkeyIdleTexture = new Texture("monkey_idle.png");
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
+        menuTexture = new Texture("menu.png");
+        shouldDisplayMenu = true;
 
         pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
         createMusic();
 
+        menu = new Menu(menuTexture);
         monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture);
 
         bananaSprites = new Array<>();
@@ -59,12 +66,19 @@ public class Main extends ApplicationAdapter {
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
         monkey.update(delta);
+        menu.update(delta);
 
         logic();
         draw();
     }
 
     private void logic() {
+        if (shouldDisplayMenu) {
+            if (menu.isStartGame()) {
+                shouldDisplayMenu = false;
+            }
+            return;
+        }
         for (int i = bananaSprites.size - 1; i >= 0; i--) {
             Banana banana = bananaSprites.get(i);
             bananaRectangle.set(banana.getBounds());
@@ -83,10 +97,14 @@ public class Main extends ApplicationAdapter {
 
         batch.begin();
 
-        batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-        monkey.draw(batch);
-        for (Banana banana: bananaSprites) {
-            banana.draw(batch);
+        if (shouldDisplayMenu) {
+            menu.draw(batch);
+        } else {
+            batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+            monkey.draw(batch);
+            for (Banana banana: bananaSprites) {
+                banana.draw(batch);
+            }
         }
 
         batch.end();
@@ -109,6 +127,7 @@ public class Main extends ApplicationAdapter {
         monkeyIdleTexture.dispose();
         bananaTexture.dispose();
         backgroundTexture.dispose();
+        menuTexture.dispose();
         pickUpBananaSound.dispose();
     }
 
