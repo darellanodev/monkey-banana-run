@@ -96,18 +96,30 @@ public class Main extends ApplicationAdapter {
         batch.setProjectionMatrix(viewport.getCamera().combined);
 
         batch.begin();
+        drawAll();
+        batch.end();
+    }
 
+    private void drawAll() {
+        drawMenu();
+        drawGame();
+    }
+
+    private void drawMenu() {
         if (shouldDisplayMenu) {
             menu.draw(batch);
-        } else {
-            batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-            monkey.draw(batch);
-            for (Banana banana: bananaSprites) {
-                banana.draw(batch);
-            }
         }
+    }
 
-        batch.end();
+    private void drawGame() {
+        if (shouldDisplayMenu) {
+            return;
+        }
+        batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        monkey.draw(batch);
+        for (Banana banana: bananaSprites) {
+            banana.draw(batch);
+        }
     }
 
     private void createBananas() {
