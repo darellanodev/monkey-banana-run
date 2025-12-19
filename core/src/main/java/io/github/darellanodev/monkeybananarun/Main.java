@@ -34,21 +34,23 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        shouldDisplayMenu = true;
         batch = new SpriteBatch();
         viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-        createTextures();
-        shouldDisplayMenu = true;
 
-        pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
+        createTextures();
+        createSounds();
         createMusic();
 
         menu = new Menu(menuTexture);
         monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture);
-
         bananaSprites = new Array<>();
         bananaRectangle = new Rectangle();
-
         createBananas();
+    }
+
+    private void createSounds() {
+        pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
     }
 
     private void createTextures() {
