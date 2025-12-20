@@ -81,14 +81,18 @@ public class Monkey {
     }
 
     public void applyMovement(float deltaTime, int direction) {
+        handleFacingRight(direction);
+        stateTime += deltaTime;
+        x += direction * speed * deltaTime;
+        x = MathUtils.clamp(x, 0, WORLD_WIDTH - width);
+        bounds.set(x, y, width, height);
+    }
+
+    private void handleFacingRight(int direction) {
         moving = direction != 0;
         if (direction != 0) {
             facingRight = direction > 0;
         }
-        x += direction * speed * deltaTime;
-        x = MathUtils.clamp(x, 0, WORLD_WIDTH - width);
-        stateTime += deltaTime;
-        bounds.set(x, y, width, height);
     }
 
     public TextureRegion getCurrentFrame() {
