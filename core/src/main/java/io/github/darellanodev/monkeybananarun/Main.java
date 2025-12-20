@@ -15,11 +15,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private FitViewport viewport;
-    public static final float WORLD_WIDTH = 16f;
-    public static final float WORLD_HEIGHT = 9f;
 
     private Texture backgroundTexture;
-
     private Texture bananaTexture;
     private Sound pickUpBananaSound;
     private Rectangle bananaRectangle;
@@ -37,7 +34,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         shouldDisplayMenu = true;
         batch = new SpriteBatch();
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        viewport = new FitViewport(Config.WORLD_WIDTH, Config.WORLD_HEIGHT);
 
         createTextures();
         createSounds();

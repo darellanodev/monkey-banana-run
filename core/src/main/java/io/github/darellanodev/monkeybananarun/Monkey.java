@@ -16,7 +16,6 @@ public class Monkey {
     private final float width = 2f;
     private final float height = 2f;
     private final float speed = 4f;
-    private final float WORLD_WIDTH = 16f;
 
     private float stateTime = 0f;
     private boolean facingRight = true;
@@ -84,7 +83,7 @@ public class Monkey {
         handleFacingRight(direction);
         stateTime += deltaTime;
         x += direction * speed * deltaTime;
-        x = MathUtils.clamp(x, 0, WORLD_WIDTH - width);
+        x = MathUtils.clamp(x, 0, Config.WORLD_WIDTH - width);
         bounds.set(x, y, width, height);
     }
 
