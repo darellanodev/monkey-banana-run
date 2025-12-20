@@ -10,24 +10,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class Monkey {
+    private final Rectangle bounds;
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> idleAnimation;
-    private float stateTime = 0f;
-
-    private boolean facingRight = true;
-
-    private float x;
-    private float y;
-
-    private boolean moving;
-
     private final float width = 2f;
     private final float height = 2f;
-
-    private final Rectangle bounds;
-
     private final float speed = 4f;
     private final float WORLD_WIDTH = 16f;
+
+    private float stateTime = 0f;
+    private boolean facingRight = true;
+    private float x;
+    private float y;
+    private boolean moving;
 
     public Monkey() {
         runAnimation = null;
