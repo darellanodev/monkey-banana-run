@@ -84,13 +84,11 @@ public class Monkey {
     }
 
     public void draw(SpriteBatch batch) {
-        TextureRegion currentFrame;
-        currentFrame = getCurrentFrame();
         if (isFacingRight()) {
-            batch.draw(currentFrame, x, y, width, height);
-        } else {
-            batch.draw(currentFrame, x + width, y, -width, height);
+            batch.draw(getCurrentFrame(), x, y, width, height);
+            return;
         }
+        batch.draw(getCurrentFrame(), x + width, y, -width, height);
     }
 
     public Rectangle getBounds() {
