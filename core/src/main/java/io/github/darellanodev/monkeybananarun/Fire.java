@@ -16,7 +16,7 @@ public class Fire {
     private final float height = 2f;
 
     public Fire(Texture texture, float initialX, float initialY){
-        fireAnimation = getAnimation(texture);
+        fireAnimation = AnimationHelper.getAnimation(texture);
         x = initialX;
         y = initialY;
         bounds = createBounds(x, y);
@@ -24,25 +24,6 @@ public class Fire {
 
     private Rectangle createBounds(float x, float y) {
         return new Rectangle(x, y, width, height);
-    }
-
-    private Animation<TextureRegion> getAnimation(Texture texture) {
-
-        int FRAME_COLS = 6;
-        int FRAME_ROWS = 1;
-        int FRAME_WIDTH = 128;
-        int FRAME_HEIGHT = 128;
-        TextureRegion[][] tmp = TextureRegion.split(texture, FRAME_WIDTH, FRAME_HEIGHT);
-        TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                frames[index++] = tmp[i][j];
-            }
-        }
-
-        return new Animation<>(0.1f, frames);
     }
 
     public void update(float deltaTime) {

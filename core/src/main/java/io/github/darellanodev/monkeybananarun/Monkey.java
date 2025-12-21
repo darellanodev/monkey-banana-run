@@ -30,8 +30,8 @@ public class Monkey {
     }
 
     public Monkey(Texture runTexture, Texture idleTexture) {
-        runAnimation = getAnimation(runTexture);
-        idleAnimation = getAnimation(idleTexture);
+        runAnimation = AnimationHelper.getAnimation(runTexture);
+        idleAnimation = AnimationHelper.getAnimation(idleTexture);
         bounds = createBounds();
     }
 
@@ -47,25 +47,6 @@ public class Monkey {
 
     public boolean isFacingRight() {
         return facingRight;
-    }
-
-    private Animation<TextureRegion> getAnimation(Texture texture) {
-
-        int FRAME_COLS = 6;
-        int FRAME_ROWS = 1;
-        int FRAME_WIDTH = 128;
-        int FRAME_HEIGHT = 128;
-        TextureRegion[][] tmp = TextureRegion.split(texture, FRAME_WIDTH, FRAME_HEIGHT);
-        TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                frames[index++] = tmp[i][j];
-            }
-        }
-
-        return new Animation<>(0.1f, frames);
     }
 
     public void update(float deltaTime) {
