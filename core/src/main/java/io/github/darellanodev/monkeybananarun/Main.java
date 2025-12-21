@@ -26,6 +26,9 @@ public class Main extends ApplicationAdapter {
     private Texture monkeyRunTexture;
     private Texture monkeyIdleTexture;
 
+    private Texture fireTexture;
+    private Fire fire;
+
     private Menu menu;
     private Texture menuTexture;
     private boolean shouldDisplayMenu;
@@ -42,6 +45,7 @@ public class Main extends ApplicationAdapter {
 
         menu = new Menu(menuTexture);
         monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture);
+        fire = new Fire(fireTexture, 11f, 2f);
         bananaSprites = new Array<>();
         bananaRectangle = new Rectangle();
         createBananas();
@@ -57,6 +61,7 @@ public class Main extends ApplicationAdapter {
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
         menuTexture = new Texture("menu.png");
+        fireTexture = new Texture("fire.png");
     }
 
     private void createMusic() {
@@ -70,6 +75,7 @@ public class Main extends ApplicationAdapter {
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
         monkey.update(delta);
+        fire.update(delta);
         menu.update(delta);
 
         logic();
@@ -132,6 +138,7 @@ public class Main extends ApplicationAdapter {
         }
         batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         monkey.draw(batch);
+        fire.draw(batch);
         for (Banana banana: bananaSprites) {
             banana.draw(batch);
         }
