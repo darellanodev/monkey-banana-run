@@ -1,0 +1,9 @@
+background.png
+banana.png
+fire.png
+menu.png
+monkey_burned.png
+monkey_idle.png
+monkey_run.png
+music.mp3
+pickup_banana.wav
