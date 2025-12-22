@@ -25,6 +25,7 @@ public class Main extends ApplicationAdapter {
     private Monkey monkey;
     private Texture monkeyRunTexture;
     private Texture monkeyIdleTexture;
+    private Texture monkeyBurnedTexture;
 
     private Texture fireTexture;
     private Fire fire;
@@ -44,7 +45,7 @@ public class Main extends ApplicationAdapter {
         createMusic();
 
         menu = new Menu(menuTexture);
-        monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture);
+        monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture, monkeyBurnedTexture);
         fire = new Fire(fireTexture, 11f, 2f);
         bananaSprites = new Array<>();
         bananaRectangle = new Rectangle();
@@ -58,6 +59,7 @@ public class Main extends ApplicationAdapter {
     private void createTextures() {
         monkeyRunTexture = new Texture("monkey_run.png");
         monkeyIdleTexture = new Texture("monkey_idle.png");
+        monkeyBurnedTexture = new Texture("monkey_burned.png");
         bananaTexture = new Texture("banana.png");
         backgroundTexture = new Texture("background.png");
         menuTexture = new Texture("menu.png");
@@ -84,12 +86,23 @@ public class Main extends ApplicationAdapter {
 
     private void logic() {
         menuLogic();
+        fireLogic();
         bananasLogic();
     }
 
     private void menuLogic() {
         if (shouldDisplayMenu && menu.isStartGame()) {
             shouldDisplayMenu = false;
+        }
+    }
+
+    private void fireLogic() {
+        if (shouldDisplayMenu) {
+            return;
+        }
+
+        if(monkey.getBounds().overlaps(fire.getBounds())){
+            monkey.burn();
         }
     }
 
@@ -164,6 +177,7 @@ public class Main extends ApplicationAdapter {
     private void disposeTextures() {
         monkeyRunTexture.dispose();
         monkeyIdleTexture.dispose();
+        monkeyBurnedTexture.dispose();
         bananaTexture.dispose();
         backgroundTexture.dispose();
         menuTexture.dispose();

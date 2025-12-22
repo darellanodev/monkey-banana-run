@@ -13,9 +13,13 @@ public class Monkey {
     private final Rectangle bounds;
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> burnedAnimation;
     private final float width = 2f;
     private final float height = 2f;
     private final float speed = 4f;
+
+    private enum State { IDLE, RUNNING, BURNED }
+    private State state = State.IDLE;
 
     private float stateTime = 0f;
     private boolean facingRight = true;
@@ -26,12 +30,14 @@ public class Monkey {
     public Monkey() {
         runAnimation = null;
         idleAnimation = null;
+        burnedAnimation = null;
         bounds = createBounds();
     }
 
-    public Monkey(Texture runTexture, Texture idleTexture) {
+    public Monkey(Texture runTexture, Texture idleTexture, Texture burnedTexture) {
         runAnimation = AnimationHelper.getAnimation(runTexture);
         idleAnimation = AnimationHelper.getAnimation(idleTexture);
+        burnedAnimation = AnimationHelper.getAnimation(burnedTexture);
         bounds = createBounds();
     }
 
@@ -39,6 +45,11 @@ public class Monkey {
         x = 1f;
         y = 2f;
         return new Rectangle(x, y, width, height);
+    }
+
+    public void burn() {
+        state = State.BURNED;
+        moving = false;
     }
 
     public float getX() {
@@ -50,6 +61,12 @@ public class Monkey {
     }
 
     public void update(float deltaTime) {
+
+        if (state == State.BURNED) {
+            stateTime += deltaTime;
+            return;
+        }
+
         int direction = 0;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             direction = 1;
@@ -63,9 +80,18 @@ public class Monkey {
     public void applyMovement(float deltaTime, int direction) {
         handleFacingRight(direction);
         stateTime += deltaTime;
+        handleState(direction);
         x += direction * speed * deltaTime;
         x = MathUtils.clamp(x, 0, Config.WORLD_WIDTH - width);
         bounds.set(x, y, width, height);
+    }
+
+    private void handleState(int direction) {
+        if (direction != 0) {
+            state = State.RUNNING;
+            return;
+        }
+        state = State.IDLE;
     }
 
     private void handleFacingRight(int direction) {
@@ -76,10 +102,15 @@ public class Monkey {
     }
 
     public TextureRegion getCurrentFrame() {
-        if (moving){
-            return runAnimation.getKeyFrame(stateTime, true);
-        } else {
-            return idleAnimation.getKeyFrame(stateTime, true);
+        switch (state) {
+            case BURNED:
+                return burnedAnimation.getKeyFrame(stateTime, true);
+            case RUNNING:
+                return runAnimation.getKeyFrame(stateTime, true);
+            case IDLE:
+            default:
+                return idleAnimation.getKeyFrame(stateTime, true);
+
         }
     }
 
