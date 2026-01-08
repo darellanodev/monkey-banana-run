@@ -17,8 +17,10 @@ public class Monkey {
     private final float width = 2f;
     private final float height = 2f;
     private final float speed = 4f;
+    private final float jumpSpeed = 0.5f;
+    private final float maxJumpPosition = 4f;
 
-    private enum State { IDLE, RUNNING, BURNED }
+    private enum State { IDLE, RUNNING, BURNED, JUMPING, FALLING }
     private State state = State.IDLE;
 
     private float stateTime = 0f;
@@ -67,9 +69,17 @@ public class Monkey {
             return;
         }
 
-        int direction = getDirection();
+        handleJump();
 
+        int direction = getDirection();
         applyMovement(deltaTime, direction);
+
+    }
+
+    private void handleJump() {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            state = State.JUMPING;
+        }
     }
 
     private int getDirection() {
@@ -82,12 +92,40 @@ public class Monkey {
     }
 
     public void applyMovement(float deltaTime, int direction) {
+        applyHorizontalMovement(deltaTime, direction);
+        applyJumpingMovement(deltaTime);
+        applyFallingMovement(deltaTime);
+        bounds.set(x, y, width, height);
+    }
+
+    private void applyHorizontalMovement(float deltaTime, int direction) {
         handleFacingRight(direction);
         stateTime += deltaTime;
         handleState(direction);
         x += direction * speed * deltaTime;
         x = MathUtils.clamp(x, 0, Config.WORLD_WIDTH - width);
-        bounds.set(x, y, width, height);
+    }
+
+    private void applyJumpingMovement(float deltaTime) {
+        if (state != State.JUMPING) {
+            return;
+        }
+        if (y >= maxJumpPosition) {
+            state = State.FALLING;
+            return;
+        }
+        y += jumpSpeed * speed * deltaTime;
+    }
+
+    private void applyFallingMovement(float deltaTime) {
+        if (state != State.FALLING) {
+            return;
+        }
+        if (y <= 2f) {
+            state = State.IDLE;
+            return;
+        }
+        y -= jumpSpeed * speed * deltaTime;
     }
 
     private void handleState(int direction) {
@@ -95,7 +133,9 @@ public class Monkey {
             state = State.RUNNING;
             return;
         }
-        state = State.IDLE;
+        if (state != State.JUMPING && state != State.FALLING) {
+            state = State.IDLE;
+        }
     }
 
     private void handleFacingRight(int direction) {
