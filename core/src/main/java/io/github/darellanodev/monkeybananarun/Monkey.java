@@ -67,14 +67,18 @@ public class Monkey {
             return;
         }
 
-        int direction = 0;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            direction = 1;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            direction = -1;
-        }
+        int direction = getDirection();
 
         applyMovement(deltaTime, direction);
+    }
+
+    private int getDirection() {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            return 1;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            return -1;
+        }
+        return 0;
     }
 
     public void applyMovement(float deltaTime, int direction) {
