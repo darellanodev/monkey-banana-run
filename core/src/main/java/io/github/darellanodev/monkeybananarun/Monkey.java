@@ -77,7 +77,7 @@ public class Monkey {
     }
 
     private void handleJump() {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && state != State.JUMPING && state != State.JUMPING_RUNNING && state != State.FALLING && state != State.FALLING_RUNNING) {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && !isJumping() && !isFalling()) {
             state = State.JUMPING;
         }
     }
@@ -107,7 +107,7 @@ public class Monkey {
     }
 
     private void applyJumpingMovement(float deltaTime) {
-        if (state != State.JUMPING && state != State.JUMPING_RUNNING) {
+        if (!isJumping()) {
             return;
         }
         if (y >= maxJumpPosition) {
@@ -117,8 +117,16 @@ public class Monkey {
         y += jumpSpeed * speed * deltaTime;
     }
 
+    private boolean isJumping() {
+        return state == State.JUMPING || state == State.JUMPING_RUNNING;
+    }
+
+    private boolean isFalling() {
+        return state == State.FALLING || state == State.FALLING_RUNNING;
+    }
+
     private void applyFallingMovement(float deltaTime) {
-        if (state != State.FALLING && state != State.FALLING_RUNNING) {
+        if (!isFalling()) {
             return;
         }
         if (y <= 2f) {
@@ -134,7 +142,7 @@ public class Monkey {
     }
 
     private void handleStateIdle() {
-        if (state != State.JUMPING && state != State.FALLING && state != State.JUMPING_RUNNING && state != State.FALLING_RUNNING) {
+        if (!isJumping() && !isFalling()) {
             state = State.IDLE;
         }
     }
@@ -148,13 +156,13 @@ public class Monkey {
     }
 
     private void handleStateJumpingRunning() {
-        if (state == State.JUMPING || state == State.JUMPING_RUNNING) {
+        if (isJumping()) {
             state = State.JUMPING_RUNNING;
         }
     }
 
     private void handleStateFallingRunning() {
-        if (state == State.FALLING || state == State.FALLING_RUNNING) {
+        if (isFalling()) {
             state = State.FALLING_RUNNING;
         }
     }
