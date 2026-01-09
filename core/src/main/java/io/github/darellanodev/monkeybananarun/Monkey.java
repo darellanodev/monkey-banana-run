@@ -185,11 +185,12 @@ public class Monkey {
             case BURNED:
                 return burnedAnimation.getKeyFrame(stateTime, true);
             case RUNNING:
+            case FALLING_RUNNING:
+            case JUMPING_RUNNING:
                 return runAnimation.getKeyFrame(stateTime, true);
             case IDLE:
             default:
                 return idleAnimation.getKeyFrame(stateTime, true);
-
         }
     }
 
