@@ -20,7 +20,7 @@ public class Monkey {
     private final float jumpSpeed = 0.5f;
     private final float maxJumpPosition = 4f;
 
-    private enum State { IDLE, RUNNING, BURNED, JUMPING, FALLING }
+    private enum State { IDLE, RUNNING, BURNED, JUMPING, FALLING, JUMPING_RUNNING, FALLING_RUNNING }
     private State state = State.IDLE;
 
     private float stateTime = 0f;
@@ -107,7 +107,7 @@ public class Monkey {
     }
 
     private void applyJumpingMovement(float deltaTime) {
-        if (state != State.JUMPING) {
+        if (state != State.JUMPING && state != State.JUMPING_RUNNING) {
             return;
         }
         if (y >= maxJumpPosition) {
@@ -118,7 +118,7 @@ public class Monkey {
     }
 
     private void applyFallingMovement(float deltaTime) {
-        if (state != State.FALLING) {
+        if (state != State.FALLING && state != State.FALLING_RUNNING) {
             return;
         }
         if (y <= 2f) {
@@ -130,10 +130,20 @@ public class Monkey {
 
     private void handleState(int direction) {
         if (direction != 0) {
+            if (state == State.JUMPING || state == State.JUMPING_RUNNING) {
+                state = State.JUMPING_RUNNING;
+                return;
+            }
+
+            if (state == State.FALLING || state == State.FALLING_RUNNING) {
+                state = State.FALLING_RUNNING;
+                return;
+            }
+
             state = State.RUNNING;
             return;
         }
-        if (state != State.JUMPING && state != State.FALLING) {
+        if (state != State.JUMPING && state != State.FALLING && state != State.JUMPING_RUNNING && state != State.FALLING_RUNNING) {
             state = State.IDLE;
         }
     }
