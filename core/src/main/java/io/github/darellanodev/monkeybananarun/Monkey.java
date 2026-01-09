@@ -138,11 +138,11 @@ public class Monkey {
 
     private void handleState(int direction) {
         handleStateMovement(direction);
-        handleStateIdle();
+        handleStateIdle(direction);
     }
 
-    private void handleStateIdle() {
-        if (!isJumping() && !isFalling()) {
+    private void handleStateIdle(int direction) {
+        if (!isJumping() && !isFalling() && direction == 0) {
             state = State.IDLE;
         }
     }
