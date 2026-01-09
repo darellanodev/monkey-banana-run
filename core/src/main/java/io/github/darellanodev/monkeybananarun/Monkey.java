@@ -17,7 +17,7 @@ public class Monkey {
     private final float width = 2f;
     private final float height = 2f;
     private final float speed = 4f;
-    private final float jumpSpeed = 0.5f;
+    private final float jumpSpeed = 1f; // must be multiple of maxJumpPosition
     private final float maxJumpPosition = 4f;
 
     private enum State { IDLE, RUNNING, BURNED, JUMPING, FALLING, JUMPING_RUNNING, FALLING_RUNNING }
@@ -77,7 +77,7 @@ public class Monkey {
     }
 
     private void handleJump() {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && state != State.JUMPING && state != State.JUMPING_RUNNING && state != State.FALLING && state != State.FALLING_RUNNING) {
             state = State.JUMPING;
         }
     }
