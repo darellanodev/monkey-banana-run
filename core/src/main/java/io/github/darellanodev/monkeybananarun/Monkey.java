@@ -168,7 +168,7 @@ public class Monkey {
     }
 
     private void handleStateRunning() {
-       if (state != State.JUMPING_RUNNING && state != State.FALLING_RUNNING) {
+       if (!isFalling() && !isJumping()) {
            state = State.RUNNING;
        }
     }
