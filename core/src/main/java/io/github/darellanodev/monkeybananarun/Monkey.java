@@ -129,23 +129,40 @@ public class Monkey {
     }
 
     private void handleState(int direction) {
-        if (direction != 0) {
-            if (state == State.JUMPING || state == State.JUMPING_RUNNING) {
-                state = State.JUMPING_RUNNING;
-                return;
-            }
+        handleStateMovement(direction);
+        handleStateIdle();
+    }
 
-            if (state == State.FALLING || state == State.FALLING_RUNNING) {
-                state = State.FALLING_RUNNING;
-                return;
-            }
-
-            state = State.RUNNING;
-            return;
-        }
+    private void handleStateIdle() {
         if (state != State.JUMPING && state != State.FALLING && state != State.JUMPING_RUNNING && state != State.FALLING_RUNNING) {
             state = State.IDLE;
         }
+    }
+
+    private void handleStateMovement(int direction) {
+        if (direction != 0) {
+            handleStateJumpingRunning();
+            handleStateFallingRunning();
+            handleStateRunning();
+        }
+    }
+
+    private void handleStateJumpingRunning() {
+        if (state == State.JUMPING || state == State.JUMPING_RUNNING) {
+            state = State.JUMPING_RUNNING;
+        }
+    }
+
+    private void handleStateFallingRunning() {
+        if (state == State.FALLING || state == State.FALLING_RUNNING) {
+            state = State.FALLING_RUNNING;
+        }
+    }
+
+    private void handleStateRunning() {
+       if (state != State.JUMPING_RUNNING && state != State.FALLING_RUNNING) {
+           state = State.RUNNING;
+       }
     }
 
     private void handleFacingRight(int direction) {
