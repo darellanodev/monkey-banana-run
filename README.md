@@ -1,36 +1,36 @@
-# MonkeyBananaRun
+# Monkey banana run
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+A simple Java game built with LibGDX
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## THIS APPLICATION IS IN AN EARLY STAGE OF DEVELOPMENT
 
-## Platforms
+## Github repository
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
-- `html`: Web platform using GWT and WebGL. Supports only Java projects.
+- <https://github.com/darellanodev/monkey-banana-run>
 
-## Gradle
+## Technologies
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+[![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
+[![LibGDX](https://img.shields.io/badge/LibGDX-E74C3C?style=flat&logo=libgdx&logoColor=white)](https://libgdx.com)
+[![Gradle](https://img.shields.io/badge/Gradle-02303A?style=flat&logo=gradle&logoColor=white)](https://gradle.org)
+[![JUnit](https://img.shields.io/badge/JUnit-25A162?style=flat&logo=junit5&logoColor=white)](https://junit.org/junit5/)
+[![IntelliJ IDEA Community Edition](https://img.shields.io/badge/IntelliJ_IDEA_Community-0071C3?style=flat&logo=intellijidea&logoColor=white)](https://www.jetbrains.com/idea/download/)
+[![Bfxr](https://img.shields.io/badge/Bfxr-FFAA00?style=flat&logo=soundcharts&logoColor=white)](https://www.bfxr.net)
+[![Piskel](https://img.shields.io/badge/Piskel-00C8A8?style=flat&logo=pixelfed&logoColor=white)](https://www.piskelapp.com)
+[![Autotracker](https://img.shields.io/badge/Autotracker-000000?style=flat&logo=github&logoColor=white)](https://github.com/vitling/autotracker)
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `html:dist`: compiles GWT sources. The compiled application can be found at `html/build/dist`: you can use any HTTP server to deploy it.
-- `html:superDev`: compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/html](http://localhost:8080/html). Use only during development.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+## Screenshots
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+![Monkey banana run screenshot](https://github.com/darellanodev/monkey-banana-run/blob/main/github_readme/screenshot.png?raw=true)
+
+## Try it online
+
+<https://darellanodev.github.io/monkey-banana-run/>
+
+## Installation
+
+Open with the IDE Idea64 Community Edition
+
+## Execute the unit tests
+
+- Execute the tests in the IDE
