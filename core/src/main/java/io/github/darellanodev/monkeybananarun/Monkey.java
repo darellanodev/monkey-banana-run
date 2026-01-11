@@ -17,13 +17,15 @@ public class Monkey {
     private final float width = 2f;
     private final float height = 2f;
     private final float speed = 4f;
-    private final float jumpSpeed = 1f; // must be multiple of maxJumpPosition
-    private final float maxJumpPosition = 4f;
+    private final float initialJumpSpeed = 3f;
+    private final float jumpSpeedIncrement = 0.05f;
+    private final float initialY = 2f;
 
     private enum State { IDLE, RUNNING, BURNED, JUMPING, FALLING, JUMPING_RUNNING, FALLING_RUNNING }
     private State state = State.IDLE;
 
     private float stateTime = 0f;
+    private float jumpSpeed = initialJumpSpeed; // must be multiple of maxJumpPosition
     private boolean facingRight = true;
     private float x;
     private float y;
@@ -110,9 +112,12 @@ public class Monkey {
         if (!isJumping()) {
             return;
         }
-        if (y >= maxJumpPosition) {
+        if (jumpSpeed <= 0) {
             state = State.FALLING;
             return;
+        }
+        if (jumpSpeed > 0) {
+            jumpSpeed -= jumpSpeedIncrement;
         }
         y += jumpSpeed * speed * deltaTime;
     }
@@ -129,11 +134,16 @@ public class Monkey {
         if (!isFalling()) {
             return;
         }
-        if (y <= 2f) {
+        if (jumpSpeed >= initialJumpSpeed) {
             state = State.IDLE;
+            y = initialY;
             return;
         }
+        jumpSpeed += jumpSpeedIncrement;
         y -= jumpSpeed * speed * deltaTime;
+        if (y < initialY) {
+            y = initialY;
+        }
     }
 
     private void handleState(int direction) {
