@@ -16,9 +16,14 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private FitViewport viewport;
 
+    private Music music;
+
     private Texture backgroundTexture;
     private Texture bananaTexture;
     private Sound pickUpBananaSound;
+    private Sound jumpSound;
+    private Sound fallSound;
+    private Sound dieSound;
     private Rectangle bananaRectangle;
     private Array<Banana> bananaSprites;
 
@@ -45,7 +50,7 @@ public class Main extends ApplicationAdapter {
         createMusic();
 
         menu = new Menu(menuTexture);
-        monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture, monkeyBurnedTexture);
+        monkey = new Monkey(monkeyRunTexture, monkeyIdleTexture, monkeyBurnedTexture, jumpSound, fallSound);
         fire = new Fire(fireTexture, 11f, 2f);
         bananaSprites = new Array<>();
         bananaRectangle = new Rectangle();
@@ -54,6 +59,9 @@ public class Main extends ApplicationAdapter {
 
     private void createSounds() {
         pickUpBananaSound = Gdx.audio.newSound(Gdx.files.internal("pickup_banana.wav"));
+        jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
+        fallSound = Gdx.audio.newSound(Gdx.files.internal("fall.wav"));
+        dieSound = Gdx.audio.newSound(Gdx.files.internal("die.wav"));
     }
 
     private void createTextures() {
@@ -67,7 +75,7 @@ public class Main extends ApplicationAdapter {
     }
 
     private void createMusic() {
-        Music music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         music.setLooping(true);
         music.setVolume(.5f);
         //music.play();
@@ -101,8 +109,13 @@ public class Main extends ApplicationAdapter {
             return;
         }
 
+        if (monkey.getState() == Monkey.State.BURNED) {
+            return;
+        }
+
         if(monkey.getBounds().overlaps(fire.getBounds())){
             monkey.burn();
+            dieSound.play();
         }
     }
 
@@ -172,6 +185,11 @@ public class Main extends ApplicationAdapter {
         batch.dispose();
         disposeTextures();
         disposeSounds();
+        disposeMusic();
+    }
+
+    private void disposeMusic() {
+        music.dispose();
     }
 
     private void disposeTextures() {
@@ -185,6 +203,9 @@ public class Main extends ApplicationAdapter {
 
     private void disposeSounds() {
         pickUpBananaSound.dispose();
+        jumpSound.dispose();
+        fallSound.dispose();
+        dieSound.dispose();
     }
 
     @Override

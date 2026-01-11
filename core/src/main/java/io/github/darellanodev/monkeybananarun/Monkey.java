@@ -1,5 +1,6 @@
 package io.github.darellanodev.monkeybananarun;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,8 +21,10 @@ public class Monkey {
     private final float initialJumpSpeed = 3f;
     private final float jumpSpeedIncrement = 0.05f;
     private final float initialY = 2f;
+    private Sound jumpSound;
+    private Sound fallSound;
 
-    private enum State { IDLE, RUNNING, BURNED, JUMPING, FALLING, JUMPING_RUNNING, FALLING_RUNNING }
+    public enum State { IDLE, RUNNING, BURNED, JUMPING, FALLING, JUMPING_RUNNING, FALLING_RUNNING }
     private State state = State.IDLE;
 
     private float stateTime = 0f;
@@ -38,11 +41,14 @@ public class Monkey {
         bounds = createBounds();
     }
 
-    public Monkey(Texture runTexture, Texture idleTexture, Texture burnedTexture) {
+    public Monkey(Texture runTexture, Texture idleTexture, Texture burnedTexture, Sound jumpSound, Sound fallSound) {
         runAnimation = AnimationHelper.getAnimation(runTexture);
         idleAnimation = AnimationHelper.getAnimation(idleTexture);
         burnedAnimation = AnimationHelper.getAnimation(burnedTexture);
         bounds = createBounds();
+
+        this.jumpSound = jumpSound;
+        this.fallSound = fallSound;
     }
 
     private Rectangle createBounds() {
@@ -54,6 +60,10 @@ public class Monkey {
     public void burn() {
         state = State.BURNED;
         moving = false;
+    }
+
+    public State getState() {
+        return state;
     }
 
     public float getX() {
@@ -81,6 +91,7 @@ public class Monkey {
     private void handleJump() {
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && !isJumping() && !isFalling()) {
             state = State.JUMPING;
+            jumpSound.play();
         }
     }
 
@@ -136,6 +147,7 @@ public class Monkey {
         }
         if (jumpSpeed >= initialJumpSpeed) {
             state = State.IDLE;
+            fallSound.play();
             y = initialY;
             return;
         }
