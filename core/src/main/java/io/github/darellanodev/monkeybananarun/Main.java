@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
+    private SpriteBatch uiBatch;
     private FitViewport viewport;
 
     private Music music;
@@ -39,13 +42,18 @@ public class Main extends ApplicationAdapter {
     private Texture menuTexture;
     private boolean shouldDisplayMenu;
 
+    private BitmapFont font;
+    private GlyphLayout layout;
+
     @Override
     public void create() {
         shouldDisplayMenu = true;
         batch = new SpriteBatch();
+        uiBatch = new SpriteBatch();
         viewport = new FitViewport(Config.WORLD_WIDTH, Config.WORLD_HEIGHT);
 
         createTextures();
+        createFonts();
         createSounds();
         createMusic();
 
@@ -55,6 +63,13 @@ public class Main extends ApplicationAdapter {
         bananaSprites = new Array<>();
         bananaRectangle = new Rectangle();
         createBananas();
+    }
+
+    private void createFonts() {
+        font = new BitmapFont();
+        font.getData().setScale(3f, 3f);
+        font.setColor(1,1,1,1);
+        layout = new GlyphLayout();
     }
 
     private void createSounds() {
@@ -150,6 +165,23 @@ public class Main extends ApplicationAdapter {
     private void drawAll() {
         drawMenu();
         drawGame();
+        drawGameOver();
+    }
+
+    private void drawGameOver() {
+        if (monkey.getState() != Monkey.State.BURNED) {
+           return;
+        }
+
+
+        batch.end();
+
+        uiBatch.begin();
+        font.draw(uiBatch, "GAME OVER", 524f, 450f);
+        uiBatch.end();
+
+        batch.begin();
+
     }
 
     private void drawMenu() {
@@ -184,6 +216,7 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         disposeTextures();
+        disposeFonts();
         disposeSounds();
         disposeMusic();
     }
@@ -198,7 +231,12 @@ public class Main extends ApplicationAdapter {
         monkeyBurnedTexture.dispose();
         bananaTexture.dispose();
         backgroundTexture.dispose();
+        fireTexture.dispose();
         menuTexture.dispose();
+    }
+
+    private void disposeFonts() {
+        font.dispose();
     }
 
     private void disposeSounds() {
