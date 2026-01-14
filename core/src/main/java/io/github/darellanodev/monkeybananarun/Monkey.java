@@ -11,7 +11,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class Monkey {
-    private final Rectangle bounds;
+    private final Rectangle itemBounds;
+    private final Rectangle hitBounds;
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> burnedAnimation;
@@ -38,20 +39,26 @@ public class Monkey {
         runAnimation = null;
         idleAnimation = null;
         burnedAnimation = null;
-        bounds = createBounds();
+        itemBounds = createItemBounds();
+        hitBounds = createHitBounds();
     }
 
     public Monkey(Texture runTexture, Texture idleTexture, Texture burnedTexture, Sound jumpSound, Sound fallSound) {
         runAnimation = AnimationHelper.getAnimation(runTexture);
         idleAnimation = AnimationHelper.getAnimation(idleTexture);
         burnedAnimation = AnimationHelper.getAnimation(burnedTexture);
-        bounds = createBounds();
+        itemBounds = createItemBounds();
+        hitBounds = createHitBounds();
 
         this.jumpSound = jumpSound;
         this.fallSound = fallSound;
     }
 
-    private Rectangle createBounds() {
+    private Rectangle createHitBounds() {
+        return new Rectangle(x + 0.7f, y + 1.3f, width - 1.6f, height - 1.6f);
+    }
+
+    private Rectangle createItemBounds() {
         x = 1f;
         y = 2f;
         return new Rectangle(x, y, width, height);
@@ -108,7 +115,8 @@ public class Monkey {
         applyHorizontalMovement(deltaTime, direction);
         applyJumpingMovement(deltaTime);
         applyFallingMovement(deltaTime);
-        bounds.set(x, y, width, height);
+        itemBounds.set(x, y, width, height);
+        hitBounds.set(x + 0.7f, y + 1.3f, width - 1.6f, height - 1.6f);
     }
 
     private void applyHorizontalMovement(float deltaTime, int direction) {
@@ -224,7 +232,11 @@ public class Monkey {
         batch.draw(getCurrentFrame(), x + width, y, -width, height);
     }
 
-    public Rectangle getBounds() {
-        return bounds;
+    public Rectangle getItemBounds() {
+        return itemBounds;
+    }
+
+    public Rectangle getHitBounds() {
+        return hitBounds;
     }
 }

@@ -113,7 +113,7 @@ public class Main extends ApplicationAdapter {
             return;
         }
 
-        if(monkey.getBounds().overlaps(fire.getBounds())){
+        if(monkey.getHitBounds().overlaps(fire.getBounds())){
             monkey.burn();
             dieSound.play();
         }
@@ -131,7 +131,7 @@ public class Main extends ApplicationAdapter {
     private void checkIfMonkeyCollidesWithBanana(int i) {
         Banana banana = bananaSprites.get(i);
         bananaRectangle.set(banana.getBounds());
-        if (bananaRectangle.overlaps(monkey.getBounds())) {
+        if (bananaRectangle.overlaps(monkey.getItemBounds())) {
             bananaSprites.removeIndex(i);
             pickUpBananaSound.play();
         }
