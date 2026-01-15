@@ -197,8 +197,16 @@ public class Main extends ApplicationAdapter {
         if (shouldDisplayMenu) {
             return;
         }
-        batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        drawBackground();
         drawLives();
+        drawGameObjects();
+    }
+
+    private void drawBackground() {
+        batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+    }
+
+    private void drawGameObjects() {
         monkey.draw(batch);
         fire.draw(batch);
         for (Banana banana: bananaSprites) {
