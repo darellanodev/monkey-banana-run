@@ -35,6 +35,8 @@ public class Main extends ApplicationAdapter {
     private Texture monkeyIdleTexture;
     private Texture monkeyBurnedTexture;
 
+    private Texture coreFullTexture;
+
     private Texture fireTexture;
     private Fire fire;
 
@@ -87,6 +89,7 @@ public class Main extends ApplicationAdapter {
         backgroundTexture = new Texture("background.png");
         menuTexture = new Texture("menu.png");
         fireTexture = new Texture("fire.png");
+        coreFullTexture = new Texture("core_full.png");
     }
 
     private void createMusic() {
@@ -195,11 +198,18 @@ public class Main extends ApplicationAdapter {
             return;
         }
         batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        drawLives();
         monkey.draw(batch);
         fire.draw(batch);
         for (Banana banana: bananaSprites) {
             banana.draw(batch);
         }
+    }
+
+    private void drawLives() {
+        batch.draw(coreFullTexture, 1f,7.6f, 1f, 1f);
+        batch.draw(coreFullTexture, 2f,7.6f, 1f, 1f);
+        batch.draw(coreFullTexture, 3f,7.6f, 1f, 1f);
     }
 
     private void createBananas() {
@@ -233,6 +243,7 @@ public class Main extends ApplicationAdapter {
         backgroundTexture.dispose();
         fireTexture.dispose();
         menuTexture.dispose();
+        coreFullTexture.dispose();
     }
 
     private void disposeFonts() {
