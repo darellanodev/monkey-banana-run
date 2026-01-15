@@ -74,7 +74,7 @@ public class Main extends ApplicationAdapter {
 
     private void createFonts() {
         font = new BitmapFont();
-        font.getData().setScale(3f, 3f);
+        font.getData().setScale(3f);
         font.setColor(1,1,1,1);
         layout = new GlyphLayout();
     }
@@ -214,11 +214,16 @@ public class Main extends ApplicationAdapter {
         }
 
         batch.end();
-
         uiBatch.begin();
-        font.draw(uiBatch, "GAME OVER", 524f, 450f);
-        uiBatch.end();
 
+        layout.setText(font, "GAME OVER");
+
+        float x = (Gdx.graphics.getWidth() - layout.width) / 2f;
+        float y = (Gdx.graphics.getHeight() + layout.height) / 2f;
+
+        font.draw(uiBatch, layout, x, y);
+
+        uiBatch.end();
         batch.begin();
     }
 
