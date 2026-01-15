@@ -35,6 +35,9 @@ public class Monkey {
     private float y;
     private boolean moving;
 
+    private int lives = 3;
+    public final int maxLives = 3;
+
     public Monkey() {
         runAnimation = null;
         idleAnimation = null;
@@ -62,6 +65,29 @@ public class Monkey {
         x = 1f;
         y = 2f;
         return new Rectangle(x, y, width, height);
+    }
+
+    public void reinit() {
+        x = 1f;
+        y = 2f;
+        itemBounds.set(x, y, width, height);
+        hitBounds.set(x + 0.7f, y + 1.3f, width - 1.6f, height - 1.6f);
+        state = State.IDLE;
+    }
+
+    public void removeLive() {
+        if (lives == 0) {
+            return;
+        }
+        lives--;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public boolean hasLives() {
+        return lives > 0;
     }
 
     public void burn() {

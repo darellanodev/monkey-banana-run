@@ -36,6 +36,7 @@ public class Main extends ApplicationAdapter {
     private Texture monkeyBurnedTexture;
 
     private Texture coreFullTexture;
+    private Texture coreEmptyTexture;
 
     private Texture fireTexture;
     private Fire fire;
@@ -43,9 +44,13 @@ public class Main extends ApplicationAdapter {
     private Menu menu;
     private Texture menuTexture;
     private boolean shouldDisplayMenu;
+    private boolean isGameOver = false;
 
     private BitmapFont font;
     private GlyphLayout layout;
+
+    private int reinitTime = 0;
+    private final int reinitMaxTime = 300;
 
     @Override
     public void create() {
@@ -90,6 +95,7 @@ public class Main extends ApplicationAdapter {
         menuTexture = new Texture("menu.png");
         fireTexture = new Texture("fire.png");
         coreFullTexture = new Texture("core_full.png");
+        coreEmptyTexture = new Texture("core_empty.png");
     }
 
     private void createMusic() {
@@ -114,12 +120,36 @@ public class Main extends ApplicationAdapter {
         menuLogic();
         fireLogic();
         bananasLogic();
+        reinitLogic();
     }
 
     private void menuLogic() {
         if (shouldDisplayMenu && menu.isStartGame()) {
             shouldDisplayMenu = false;
         }
+    }
+
+    private void reinitLogic() {
+        if (shouldDisplayMenu) {
+            return;
+        }
+
+        if (monkey.getState() != Monkey.State.BURNED) {
+            return;
+        }
+
+        if (!monkey.hasLives()) {
+            return;
+        }
+
+        if (reinitTime < reinitMaxTime) {
+           reinitTime++;
+           return;
+        }
+
+        reinitTime = 0;
+        monkey.reinit();
+        monkey.removeLive();
     }
 
     private void fireLogic() {
@@ -134,6 +164,13 @@ public class Main extends ApplicationAdapter {
         if(monkey.getHitBounds().overlaps(fire.getBounds())){
             monkey.burn();
             dieSound.play();
+            handleGameOverState();
+        }
+    }
+
+    private void handleGameOverState() {
+        if (!monkey.hasLives()) {
+            isGameOver = true;
         }
     }
 
@@ -172,10 +209,9 @@ public class Main extends ApplicationAdapter {
     }
 
     private void drawGameOver() {
-        if (monkey.getState() != Monkey.State.BURNED) {
+        if (!isGameOver) {
            return;
         }
-
 
         batch.end();
 
@@ -184,7 +220,6 @@ public class Main extends ApplicationAdapter {
         uiBatch.end();
 
         batch.begin();
-
     }
 
     private void drawMenu() {
@@ -215,9 +250,14 @@ public class Main extends ApplicationAdapter {
     }
 
     private void drawLives() {
-        batch.draw(coreFullTexture, 1f,7.6f, 1f, 1f);
-        batch.draw(coreFullTexture, 2f,7.6f, 1f, 1f);
-        batch.draw(coreFullTexture, 3f,7.6f, 1f, 1f);
+        for(int i = 0; i < monkey.getLives(); i++) {
+            batch.draw(coreFullTexture, 1f + i,7.6f, 1f, 1f);
+        }
+        if (monkey.getLives() < 3) {
+            for(int i = monkey.getLives(); i < monkey.maxLives; i++) {
+                batch.draw(coreEmptyTexture, 1f + i,7.6f, 1f, 1f);
+            }
+        }
     }
 
     private void createBananas() {
@@ -252,6 +292,7 @@ public class Main extends ApplicationAdapter {
         fireTexture.dispose();
         menuTexture.dispose();
         coreFullTexture.dispose();
+        coreEmptyTexture.dispose();
     }
 
     private void disposeFonts() {

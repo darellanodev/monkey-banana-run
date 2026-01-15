@@ -26,4 +26,30 @@ public class MonkeyTest {
         monkey.applyMovement(1f, -1);
         assertFalse(monkey.isFacingRight());
     }
+
+    @Test
+    void removingLiveWhenHasThreeLivesResultsTwoLives() {
+        // note: initial lives are 3
+        Monkey monkey = new Monkey();
+        monkey.removeLive();
+        assertEquals(2, monkey.getLives());
+    }
+
+    @Test
+    void removingLiveWhenZeroLivesResultZeroLives() {
+        // note: initial lives are 3
+        Monkey monkey = new Monkey();
+        monkey.removeLive();
+        monkey.removeLive();
+        monkey.removeLive();
+        monkey.removeLive();
+        assertEquals(0, monkey.getLives());
+    }
+
+    @Test
+    void hasLivesMethodShouldReturnTrueInitially() {
+        // note: initial lives are 3
+        Monkey monkey = new Monkey();
+        assertTrue(monkey.hasLives());
+    }
 }
