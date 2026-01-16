@@ -108,7 +108,9 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
-        monkey.update(delta);
+        if (monkey.hasLives()) {
+            monkey.update(delta);
+        }
         fire.update(delta);
         menu.update(delta);
 
@@ -130,26 +132,24 @@ public class Main extends ApplicationAdapter {
     }
 
     private void reinitLogic() {
-        if (shouldDisplayMenu) {
-            return;
-        }
-
         if (monkey.getState() != Monkey.State.BURNED) {
             return;
         }
-
-        if (!monkey.hasLives()) {
-            return;
-        }
-
         if (reinitTime < reinitMaxTime) {
            reinitTime++;
            return;
         }
 
-        reinitTime = 0;
         monkey.reinit();
+    }
+
+    private void removeLive() {
         monkey.removeLive();
+        reinitTime = 0;
+        if (!monkey.hasLives()) {
+            isGameOver = true;
+            reinitTime = reinitMaxTime;
+        }
     }
 
     private void fireLogic() {
@@ -164,13 +164,7 @@ public class Main extends ApplicationAdapter {
         if(monkey.getHitBounds().overlaps(fire.getBounds())){
             monkey.burn();
             dieSound.play();
-            handleGameOverState();
-        }
-    }
-
-    private void handleGameOverState() {
-        if (!monkey.hasLives()) {
-            isGameOver = true;
+            removeLive();
         }
     }
 
@@ -239,6 +233,7 @@ public class Main extends ApplicationAdapter {
         }
         drawBackground();
         drawLives();
+        drawMonkey();
         drawGameObjects();
     }
 
@@ -246,8 +241,15 @@ public class Main extends ApplicationAdapter {
         batch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
     }
 
-    private void drawGameObjects() {
+    private void drawMonkey() {
+        if (!monkey.hasLives()) {
+            return;
+        }
         monkey.draw(batch);
+
+    }
+
+    private void drawGameObjects() {
         fire.draw(batch);
         for (Banana banana: bananaSprites) {
             banana.draw(batch);
