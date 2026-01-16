@@ -50,8 +50,8 @@ public class Main extends ApplicationAdapter {
     private BitmapFont font;
     private GlyphLayout layout;
 
-    private int reinitTime = 0;
-    private final int reinitMaxTime = 300;
+    private float reinitTime = 0f;
+    private final float reinitMaxTime = 3f;
 
     @Override
     public void create() {
@@ -115,15 +115,15 @@ public class Main extends ApplicationAdapter {
         fire.update(delta);
         menu.update(delta);
 
-        logic();
+        logic(delta);
         draw();
     }
 
-    private void logic() {
+    private void logic(float deltaTime) {
         menuLogic();
         fireLogic();
         bananasLogic();
-        reinitLogic();
+        reinitLogic(deltaTime);
     }
 
     private void menuLogic() {
@@ -132,7 +132,7 @@ public class Main extends ApplicationAdapter {
         }
     }
 
-    private void reinitLogic() {
+    private void reinitLogic(float deltaTime) {
         if (monkey.getState() != Monkey.State.BURNED) {
             return;
         }
@@ -140,7 +140,7 @@ public class Main extends ApplicationAdapter {
             reinitTime = reinitMaxTime;
         }
         if (reinitTime < reinitMaxTime) {
-           reinitTime++;
+           reinitTime += deltaTime * 3f;
            return;
         }
 
