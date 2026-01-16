@@ -52,4 +52,13 @@ public class MonkeyTest {
         Monkey monkey = new Monkey();
         assertTrue(monkey.hasLives());
     }
+
+    @Test
+    void hasLivesMethodShouldReturnFalseWhenZeroLives() {
+        Monkey monkey = new Monkey();
+        monkey.removeLive();
+        monkey.removeLive();
+        monkey.removeLive();
+        assertFalse(monkey.hasLives());
+    }
 }
