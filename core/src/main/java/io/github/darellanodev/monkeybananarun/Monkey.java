@@ -20,7 +20,7 @@ public class Monkey {
     private final float height = 2f;
     private final float speed = 4f;
     private final float initialJumpSpeed = 3f;
-    private final float jumpSpeedIncrementPerSecond = 6f;
+    private final float jumpSpeedIncrementPerSecond = 7f;
     private final float initialY = 2f;
     private Sound jumpSound;
     private Sound fallSound;
