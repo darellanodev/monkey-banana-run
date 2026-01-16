@@ -52,6 +52,7 @@ public class Main extends ApplicationAdapter {
 
     private float reinitTime = 0f;
     private final float reinitMaxTime = 3f;
+    private final float reinitTimeFactor = 3f;
 
     @Override
     public void create() {
@@ -140,7 +141,7 @@ public class Main extends ApplicationAdapter {
             reinitTime = reinitMaxTime;
         }
         if (reinitTime < reinitMaxTime) {
-           reinitTime += deltaTime * 3f;
+           reinitTime += deltaTime * reinitTimeFactor;
            return;
         }
 
