@@ -20,7 +20,7 @@ public class Monkey {
     private final float height = 2f;
     private final float speed = 4f;
     private final float initialJumpSpeed = 3f;
-    private final float jumpSpeedIncrement = 0.05f;
+    private final float jumpSpeedIncrementPerSecond = 6f;
     private final float initialY = 2f;
     private Sound jumpSound;
     private Sound fallSound;
@@ -124,6 +124,7 @@ public class Monkey {
     private void handleJump() {
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && !isJumping() && !isFalling()) {
             state = State.JUMPING;
+            jumpSpeed = initialJumpSpeed;
             jumpSound.play();
         }
     }
@@ -157,13 +158,16 @@ public class Monkey {
         if (!isJumping()) {
             return;
         }
+
         if (jumpSpeed <= 0) {
             state = State.FALLING;
             return;
         }
+
         if (jumpSpeed > 0) {
-            jumpSpeed -= jumpSpeedIncrement;
+            jumpSpeed -= jumpSpeedIncrementPerSecond * deltaTime;
         }
+
         y += jumpSpeed * speed * deltaTime;
     }
 
@@ -179,14 +183,18 @@ public class Monkey {
         if (!isFalling()) {
             return;
         }
+
         if (jumpSpeed >= initialJumpSpeed) {
             state = State.IDLE;
             fallSound.play();
             y = initialY;
             return;
         }
-        jumpSpeed += jumpSpeedIncrement;
+
+        jumpSpeed += jumpSpeedIncrementPerSecond * deltaTime;
+
         y -= jumpSpeed * speed * deltaTime;
+
         if (y < initialY) {
             y = initialY;
         }
