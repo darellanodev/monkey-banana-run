@@ -2,6 +2,7 @@ package io.github.darellanodev.monkeybananarun;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -134,6 +135,9 @@ public class Main extends ApplicationAdapter {
     private void reinitLogic() {
         if (monkey.getState() != Monkey.State.BURNED) {
             return;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER) || (Gdx.input.isKeyPressed(Input.Keys.SPACE))) {
+            reinitTime = reinitMaxTime;
         }
         if (reinitTime < reinitMaxTime) {
            reinitTime++;
